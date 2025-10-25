@@ -1,3 +1,13 @@
+// template for a song
+// {
+//     id: 1,
+//     title: "song_title,
+//     artist: "song_artist",
+//     album: "album_cover",
+//     audioUrl: "/music/song_name.mp3",
+//     albumArt: "/music/albumcovers/picture_name.jpg"
+// }
+
 export const songs = [
     {
         id: 1,

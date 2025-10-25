@@ -8,13 +8,11 @@ function NowPlaying({ song, onPrevious, onNext, hasPrevious, hasNext }) {
   const [duration, setDuration] = useState(0)
   const audioRef = useRef(null)
 
-  // Reset player when song changes
   useEffect(() => {
     setIsPlaying(false)
     setProgress(0)
     setCurrentTime(0)
     
-    // Load the new song
     if (audioRef.current) {
       audioRef.current.load()
     }
@@ -39,7 +37,6 @@ function NowPlaying({ song, onPrevious, onNext, hasPrevious, hasNext }) {
       setIsPlaying(false)
       setProgress(0)
       setCurrentTime(0)
-      // Auto-play next song when current song ends
       if (onNext) {
         onNext()
       }
