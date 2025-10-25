@@ -1,0 +1,40 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+#root {
+  height: 100vh;
+}
+
+.app {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #4861cf 0%, #3a3045 100%);
+  padding: 2rem;
+}
+
+.container {
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+}
+
+@media (max-width: 968px) {
+  .container {
+    flex-direction: column;
+  }
+}
