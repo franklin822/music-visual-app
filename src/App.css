@@ -4,7 +4,8 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   overflow: hidden;
 }
@@ -29,12 +30,15 @@ body {
 
 .container {
   display: flex;
-  gap: 3rem;
+  gap: 2rem;
   align-items: center;
+  max-width: 1400px;
 }
 
-@media (max-width: 968px) {
+@media (max-width: 1200px) {
   .container {
     flex-direction: column;
+    overflow-y: auto;
+    max-height: 100%;
   }
 }

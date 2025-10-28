@@ -84,6 +84,21 @@
   transform: scale(0.95);
 }
 
+.shuffle-button.active {
+  background: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+}
+
+.placeholder-button {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.placeholder-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: none;
+}
+
 .enhanced-progress {
   width: 100%;
   margin: 2rem 0;

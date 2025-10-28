@@ -6,8 +6,8 @@ function SongList({ songs, currentSong, onSongSelect }) {
       <h3>Playlist</h3>
       <div className="songs">
         {songs.map((song) => (
-          <div 
-            key={song.id} 
+          <div
+            key={song.id}
             className={`song-item ${currentSong.id === song.id ? 'active' : ''}`}
             onClick={() => onSongSelect(song)}
           >

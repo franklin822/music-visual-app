@@ -62,7 +62,7 @@
   opacity: 0.8;
 }
 
- .song-list::-webkit-scrollbar {
+.song-list::-webkit-scrollbar {
   width: 6px;
 }
 

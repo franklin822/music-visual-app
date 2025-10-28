@@ -26,6 +26,13 @@ Perfect for:
 - **Queue Display**: See your full playlist with album art and song details
 - **Customizable**: Customize your playlists by adding songs with your own images and titles 
 
+## Recent Changes
+
+- Added shuffle feature
+- Fixed songs not automatically playing when skipping or song ends
+- New display for the queue, updates on shuffle
+- For my personal files, I added about 10 more songs
+
 ## 🚀 Getting Started
 
 ### Prerequisites
@@ -97,6 +104,8 @@ music-visualizer/
 │   ├── components/
 │   │   ├── NowPlaying.jsx  # Main player component
 │   │   ├── NowPlaying.css
+│   │   ├── Queue.jsx
+│   │   ├── Queue.css
 │   │   ├── SongList.jsx    # Playlist component
 │   │   └── SongList.css
 │   ├── data/
@@ -109,7 +118,7 @@ music-visualizer/
 └── README.md
 ```
 
-### Supported Audio/Picture Formats
+### Supported File Formats
 - MP3 (`.mp3`)
 - WAV (`.wav`)
 - OGG (`.ogg`)
@@ -144,7 +153,7 @@ music-visualizer/
 - Confirm image paths are correct
 - Check that images are in a web-compatible format (JPG, PNG)
 
-## 🚧 Possible Future Features
+## 🚧 Future Features
 
 - [ ] AI-powered playlist generation based on mood/vibe
 - [ ] Song recommendations similar to currently playing track
@@ -153,6 +162,8 @@ music-visualizer/
 - [ ] Visualizer animations that react to audio
 - [ ] User-customizable themes
 - [ ] Create multiple playlists
+- [ ] Make playlist and queue retractable (only display the current song)
+- [ ] Add customizability for the background
 
 ## 📄 License
 
