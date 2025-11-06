@@ -1,7 +1,7 @@
 import './Queue.css'
 
 function Queue({ queue, songs, queuePosition }) {
-    const upcomingQueue = queue.slice(queuePosition, queuePosition + 10)
+    const upcomingQueue = queue.slice(queuePosition, queuePosition + 24)
 
     return (
         <div className="queue">

@@ -26,6 +26,17 @@ Perfect for:
 - **Queue Display**: See your full playlist with album art and song details
 - **Customizable**: Customize your playlists by adding songs with your own images and titles 
 
+## Architecture
+
+This app follows a component-based architecture using React:
+
+- **App.jsx** - Main container managing playback state and coordinating all child components
+- **NowPlaying.jsx** - Displays current song, album cover, and playback controls
+- **Queue.jsx** - Shows upcoming songs in the playlist
+- **SongList.jsx** - Displays full song collection
+
+For detailed architecture documentation including component diagrams and data flow, see [ARCHITECTURE.md](./ARCHITECTURE.md).
+
 ## Recent Changes
 
 - Added shuffle feature
@@ -155,15 +166,27 @@ music-visualizer/
 
 ## 🚧 Future Features
 
-- [ ] AI-powered playlist generation based on mood/vibe
-- [ ] Song recommendations similar to currently playing track
-- [ ] Volume control
-- [ ] Shuffle and repeat modes
-- [ ] Visualizer animations that react to audio
-- [ ] User-customizable themes
-- [ ] Create multiple playlists
-- [ ] Make playlist and queue retractable (only display the current song)
-- [ ] Add customizability for the background
+-  AI-powered playlist generation based on mood/vibe
+-  Song recommendations similar to currently playing track
+-  Volume control
+-  Shuffle and repeat modes
+-  Visualizer animations that react to audio
+-  User-customizable themes
+-  Create multiple playlists
+-  Make playlist and queue retractable (only display the current song)
+-  Add customizability for the background
+-  Add/remove songs from queue
+-  Manually rearrange queue
+-  Set same volume level for all songs
+-  ARCHITECTURE.md file that explains all the code, such as design choices and logic
+
+## Bugs/Possible Improvements
+
+- Queue can't display more songs when you're near end of the playlist
+- For example, if you play song 17/20, and shuffle, it only shuffles 3 songs
+- Improve icons 
+- Improve the background/aesthetic
+- Let user click on any song from queue to instantly skip to it
 
 ## 📄 License
 

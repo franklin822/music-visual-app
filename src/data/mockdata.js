@@ -86,7 +86,7 @@ export const songs = [
         title: "Innocence",
         artist: "Daniel Caesar",
         album: "Pseudomutuality",
-        audioUrl: "/music/innocence.wav",
+        audioUrl: "/music/innocence.mp3",
         albumArt: "/music/albumcovers/pseudomutuality.jpg"
     },
     {
@@ -171,6 +171,14 @@ export const songs = [
     },
     {
         id: 21,
+        title: "Horsepower",
+        artist: "Daniel Caesar",
+        album: "Horsepower",
+        audioUrl: "/music/horsepower.mp3",
+        albumArt: "/music/albumcovers/innocence.jpg"
+    },
+    {
+        id: 22,
         title: "All I Ask",
         artist: "Bruno Mars",
         album: "Covers",
@@ -178,7 +186,7 @@ export const songs = [
         albumArt: "/music/albumcovers/bruno.jpg"
     },
     {
-        id: 22,
+        id: 23,
         title: "L I S A",
         artist: "ぬいぐるみクレヨン Lush Crayon",
         album: "get a job",
