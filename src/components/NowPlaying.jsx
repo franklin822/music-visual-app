@@ -2,13 +2,19 @@ import { useState, useEffect, useRef } from 'react'
 import './NowPlaying.css'
 
 function NowPlaying({ song, onPrevious, onNext, onSongEnd, shouldAutoPlay, onAutoPlayHandled, onPause, isShuffleOn, onToggleShuffle, hasPrevious, hasNext }) {
-  const [isPlaying, setIsPlaying] = useState(false)
+  // whether the song is currently playing
+  const [isPlaying, setIsPlaying] = useState(false) 
+  // tracks how far in the song we are (0%-100%)
   const [progress, setProgress] = useState(0)
+  // sets the time of the song when a user clicks or song changes (in seconds)
   const [currentTime, setCurrentTime] = useState(0)
+  // length of the song (in seconds)
   const [duration, setDuration] = useState(0)
+  // holds reference to actual audio element in HTML
   const audioRef = useRef(null)
 
-  // handle song changes
+  // when song changes, reset progress and current time
+  // loads new audio file
   useEffect(() => {
     setProgress(0)
     setCurrentTime(0)
@@ -18,7 +24,7 @@ function NowPlaying({ song, onPrevious, onNext, onSongEnd, shouldAutoPlay, onAut
     }
   }, [song])
 
-  // handle auto-play
+  // handles intial auto-play when song changes
   useEffect(() => {
     if (shouldAutoPlay && audioRef.current) {
       audioRef.current.play().then(() => {
@@ -31,11 +37,12 @@ function NowPlaying({ song, onPrevious, onNext, onSongEnd, shouldAutoPlay, onAut
     }
   }, [shouldAutoPlay, song, onAutoPlayHandled])
 
-  // audio event listeners
+  // sets up listeners for audio element events and updates song info
   useEffect(() => {
     const audio = audioRef.current
     if (!audio) return
 
+    // update song progress
     const updateProgress = () => {
       if (audio.duration) {
         setProgress((audio.currentTime / audio.duration) * 100)
@@ -43,10 +50,12 @@ function NowPlaying({ song, onPrevious, onNext, onSongEnd, shouldAutoPlay, onAut
       }
     }
 
+    // when metadata is loaded, set duration
     const handleLoadedMetadata = () => {
       setDuration(audio.duration)
     }
 
+    // logic for when song ends
     const handleEnded = () => {
       setIsPlaying(false)
       setProgress(0)
@@ -64,7 +73,9 @@ function NowPlaying({ song, onPrevious, onNext, onSongEnd, shouldAutoPlay, onAut
       setIsPlaying(true)
     }
 
+    // track and update song progress 
     audio.addEventListener('timeupdate', updateProgress)
+    // song metadata loaded (duration etc)
     audio.addEventListener('loadedmetadata', handleLoadedMetadata)
     audio.addEventListener('ended', handleEnded)
     audio.addEventListener('pause', handlePause)
@@ -79,6 +90,7 @@ function NowPlaying({ song, onPrevious, onNext, onSongEnd, shouldAutoPlay, onAut
     }
   }, [onSongEnd])
 
+  // handles play/pause button click
   const togglePlayPause = () => {
     const audio = audioRef.current
     if (!audio) return
@@ -93,6 +105,7 @@ function NowPlaying({ song, onPrevious, onNext, onSongEnd, shouldAutoPlay, onAut
     }
   }
 
+  // handles interaction with progress bar
   const handleProgressClick = (e) => {
     const audio = audioRef.current
     if (!audio || !audio.duration) return
@@ -108,6 +121,7 @@ function NowPlaying({ song, onPrevious, onNext, onSongEnd, shouldAutoPlay, onAut
     setCurrentTime(newTime)
   }
 
+  // converts time in seconds to M:SS format for display
   const formatTime = (time) => {
     if (!time || isNaN(time)) return '0:00'
     const minutes = Math.floor(time / 60)
@@ -119,7 +133,7 @@ function NowPlaying({ song, onPrevious, onNext, onSongEnd, shouldAutoPlay, onAut
     <div className="now-playing">
       <div className="album-art">
         <img
-          src={song.albumArt || 'https://via.placeholder.com/400x400/4a5568/ffffff?text=No+Cover'}
+          src={song.albumArt || 'https://dummyimage.com/400x400/1e293b/1e293b'}
           alt={`${song.album} cover`}
         />
       </div>
@@ -143,6 +157,7 @@ function NowPlaying({ song, onPrevious, onNext, onSongEnd, shouldAutoPlay, onAut
           onClick={onPrevious}
           className="control-button"
           title="Previous"
+          disabled={!hasPrevious}
         >
           ⏮
         </button>
@@ -153,6 +168,7 @@ function NowPlaying({ song, onPrevious, onNext, onSongEnd, shouldAutoPlay, onAut
           onClick={onNext}
           className="control-button"
           title="Next"
+          disabled={!hasNext}
         >
           ⏭
         </button>

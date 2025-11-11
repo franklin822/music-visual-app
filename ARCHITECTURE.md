@@ -101,7 +101,6 @@ Toggles shuffle mode on/off:
 - `songs`: All songs (for looking up details)
 - `queuePosition`: Current position (to show upcoming)
 
----
 
 ## Key Concepts
 
@@ -112,3 +111,29 @@ Toggles shuffle mode on/off:
 **Why Two Variables for Position:**
 - `queue` = WHAT songs and in WHAT order (the playlist)
 - `queuePosition` = WHERE you are in that playlist (the playhead)
+
+## NowPlaying.jsx - Audio Player Component
+
+### Purpose
+Handles all playback controls and UI for the currently playing song. Manages the HTML5 Audio API, progress tracking, and user interactions.
+
+### Key Pattern: Controlled vs Uncontrolled
+The HTML5 `<audio>` element is **uncontrolled** - it has its own internal state. NowPlaying bridges this by:
+1. Using `audioRef` to directly control the audio element (`play()`, `pause()`, `currentTime`)
+2. Using event listeners to sync React state with audio state
+3. Maintaining React state (`isPlaying`, `progress`) for UI rendering
+
+### The Three useEffects
+
+**1. Song Change Handler** `[song]`
+Resets playback state when song changes. Calls `audio.load()` to load new file.
+
+**2. Auto-Play Handler** `[shouldAutoPlay, song, onAutoPlayHandled]`
+Responds to App.jsx's auto-play signal by starting playback and resetting the flag.
+
+**3. Audio Event Listeners** `[onSongEnd]`
+Sets up 5 event listeners to track audio state changes:
+- `timeupdate`: Updates progress bar continuously
+- `loadedmetadata`: Captures song duration
+- `ended`: Notifies App.jsx to advance queue
+- `play`/`pause`: Syncs `isPlaying` state with actual playback

@@ -84,8 +84,13 @@
   transform: scale(0.95);
 }
 
+.control-button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
 .shuffle-button.active {
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(105, 77, 182, 0.4);
   box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
 }
 

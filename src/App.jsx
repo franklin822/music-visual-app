@@ -6,12 +6,18 @@ import Queue from './components/Queue'
 import { songs } from './data/mockdata'
 
 function App() {
+  // array that holds the order of song indices to be played
   const [queue, setQueue] = useState(songs.map((_, index) => index))
+  // current position in the queue
   const [queuePosition, setQueuePosition] = useState(0)
+  // whether the current song should auto-play
   const [shouldAutoPlay, setShouldAutoPlay] = useState(false)
+  // whether shuffle mode is on
   const [isShuffleOn, setIsShuffleOn] = useState(false)
 
+  // current song based on queue position
   const currentSongIndex = queue[queuePosition]
+  // information of the current song
   const currentSong = songs[currentSongIndex]
 
   // shuffle array for randomized queue
@@ -24,6 +30,7 @@ function App() {
     return shuffled
   }
 
+  // handles when a song is selected from playlist
   const handleSongSelect = (song) => {
     const index = songs.findIndex(s => s.id === song.id)
     const positionInQueue = queue.findIndex(queueIndex => queueIndex === index)
@@ -47,6 +54,7 @@ function App() {
     }
   }
 
+  // handles when a song ends, advances queue
   const handleSongEnd = () => {
     if (queuePosition < queue.length - 1) {
       setQueuePosition(queuePosition + 1)
@@ -56,7 +64,7 @@ function App() {
     }
   }
 
-  // toggles shuffle mode
+  // shuffles the arary using Fisher-Yates algorithm
   const toggleShuffle = () => {
     const currentSongIdx = queue[queuePosition]
 
