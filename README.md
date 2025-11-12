@@ -43,6 +43,8 @@ For detailed architecture documentation including component diagrams and data fl
 - Fixed songs not automatically playing when skipping or song ends
 - New display for the queue, updates on shuffle
 - For my personal files, I added about 10 more songs
+- Fixed queue not displaying songs properly
+- Can now select songs from queue
 
 ## 🚀 Getting Started
 

@@ -68,19 +68,20 @@ function App() {
   const toggleShuffle = () => {
     const currentSongIdx = queue[queuePosition]
 
+    // turning shuffle on
     if (!isShuffleOn) {
+      // put current song first, then shuffle all other songs
       const otherSongs = songs
         .map((_, index) => index)
         .filter(index => index !== currentSongIdx)
       const shuffledOthers = shuffleArray(otherSongs)
 
-      const newQueue = [
-        ...shuffledOthers.slice(0, queuePosition),
-        currentSongIdx,
-        ...shuffledOthers.slice(queuePosition)
-      ]
+      const newQueue = [currentSongIdx, ...shuffledOthers]
       setQueue(newQueue)
+      setQueuePosition(0)  // reset 
+    // turning shuffle off
     } else {
+      // display queue starting from current song
       const originalQueue = songs.map((_, index) => index)
       setQueue(originalQueue)
       setQueuePosition(currentSongIdx)
@@ -89,6 +90,12 @@ function App() {
     setIsShuffleOn(!isShuffleOn)
   }
 
+  // handles when a song is selected from the queue
+  const handleQueueSelect = (newPosition) => {
+    setQueuePosition(newPosition)
+    setShouldAutoPlay(true)
+  }
+  
   return (
     <div className="app">
       <div className="container">
@@ -114,6 +121,7 @@ function App() {
           queue={queue}
           songs={songs}
           queuePosition={queuePosition}
+          onSongSelect={handleQueueSelect}
         />
       </div>
     </div>
