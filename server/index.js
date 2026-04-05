@@ -12,7 +12,17 @@ fs.mkdirSync(path.join(__dirname, 'uploads/audio'), { recursive: true })
 fs.mkdirSync(path.join(__dirname, 'uploads/art'), { recursive: true })
 
 app.use(cors())
-app.use(express.json())
+
+// only parse JSON if the request actually declares a JSON body
+app.use((req, res, next) => {
+  const contentType = req.headers['content-type'] || ''
+  if (contentType.includes('application/json')) {
+    express.json()(req, res, next)
+  } else {
+    next()
+  }
+})
+
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 
 app.use('/api/songs', require('./routes/songs'))

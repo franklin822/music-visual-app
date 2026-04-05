@@ -8,11 +8,17 @@ import ImportSong from './components/ImportSong'
 function App() {
   // fetch songs from the backend API
   const [songs, setSongs] = useState([])
+  // whether the songs are still loading
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     fetch('/api/songs')
       .then(res => res.json())
-      .then(data => setSongs(data))
+      .then(data => {
+        setSongs(data)
+        setIsLoading(false)
+      })
+      .catch(() => setIsLoading(false))
   }, [])
 
   // array that holds the order of song indices to be played
@@ -114,10 +120,32 @@ function App() {
 
   // handles when a new song is added, appends to songs without refetching
   const handleSongAdded = (newSong) => {
-    setSongs(prev => [newSong, ...prev])
+    setSongs(prev => {
+      const updated = [newSong, ...prev]
+      setQueue(updated.map((_, index) => index))
+      return updated
+    })
   }
 
-  if (!currentSong) return null
+  // show loading state while fetching
+  if (isLoading) return (
+    <div className="app">
+      <div style={{ color: 'white', padding: '40px', textAlign: 'center' }}>
+        <p>Loading...</p>
+      </div>
+    </div>
+  )
+
+  // show import form if no songs in DB yet
+  if (songs.length === 0) return (
+    <div className="app">
+      <div style={{ color: 'white', padding: '40px', textAlign: 'center' }}>
+        <h2>No songs yet</h2>
+        <p>Use the import panel to add your first song</p>
+        <ImportSong onSongAdded={handleSongAdded} />
+      </div>
+    </div>
+  )
 
   return (
     <div className="app">
