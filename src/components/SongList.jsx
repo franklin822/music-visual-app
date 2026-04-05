@@ -11,7 +11,7 @@ function SongList({ songs, currentSong, onSongSelect }) {
         className={`song-item ${currentSong.id === song.id ? 'active' : ''}`}
         onClick={() => onSongSelect(song)}
         >
-          <img src={song.albumArt} alt={song.album} />
+          <img src={song.album_art_url} alt={song.album} />
           <div className="song-details">
             <p className="song-title">{song.title}</p>
             <p className="song-artist">{song.artist}</p>

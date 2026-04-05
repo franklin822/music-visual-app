@@ -133,7 +133,7 @@ function NowPlaying({ song, onPrevious, onNext, onSongEnd, shouldAutoPlay, onAut
     <div className="now-playing">
       <div className="album-art">
         <img
-          src={song.albumArt || 'https://dummyimage.com/400x400/1e293b/1e293b'}
+          src={song.album_art_url || 'https://dummyimage.com/400x400/1e293b/1e293b'}
           alt={`${song.album} cover`}
         />
       </div>
@@ -143,7 +143,7 @@ function NowPlaying({ song, onPrevious, onNext, onSongEnd, shouldAutoPlay, onAut
         <p className="album-name">{song.album}</p>
       </div>
 
-      <audio ref={audioRef} src={song.audioUrl} />
+      <audio ref={audioRef} src={song.audio_url} />
 
       <div className="player-controls">
         <button

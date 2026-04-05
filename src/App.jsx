@@ -1,19 +1,35 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import NowPlaying from './components/NowPlaying'
 import SongList from './components/SongList'
 import Queue from './components/Queue'
-import { songs } from './data/mockdata'
+import ImportSong from './components/ImportSong'
 
 function App() {
+  // fetch songs from the backend API
+  const [songs, setSongs] = useState([])
+
+  useEffect(() => {
+    fetch('/api/songs')
+      .then(res => res.json())
+      .then(data => setSongs(data))
+  }, [])
+
   // array that holds the order of song indices to be played
-  const [queue, setQueue] = useState(songs.map((_, index) => index))
+  const [queue, setQueue] = useState([])
   // current position in the queue
   const [queuePosition, setQueuePosition] = useState(0)
   // whether the current song should auto-play
   const [shouldAutoPlay, setShouldAutoPlay] = useState(false)
   // whether shuffle mode is on
   const [isShuffleOn, setIsShuffleOn] = useState(false)
+
+  // update queue when songs load from API
+  useEffect(() => {
+    if (songs.length > 0) {
+      setQueue(songs.map((_, index) => index))
+    }
+  }, [songs])
 
   // current song based on queue position
   const currentSongIndex = queue[queuePosition]
@@ -64,7 +80,7 @@ function App() {
     }
   }
 
-  // shuffles the arary using Fisher-Yates algorithm
+  // shuffles the array using Fisher-Yates algorithm
   const toggleShuffle = () => {
     const currentSongIdx = queue[queuePosition]
 
@@ -78,7 +94,7 @@ function App() {
 
       const newQueue = [currentSongIdx, ...shuffledOthers]
       setQueue(newQueue)
-      setQueuePosition(0)  // reset 
+      setQueuePosition(0)  // reset
     // turning shuffle off
     } else {
       // display queue starting from current song
@@ -95,7 +111,14 @@ function App() {
     setQueuePosition(newPosition)
     setShouldAutoPlay(true)
   }
-  
+
+  // handles when a new song is added, appends to songs without refetching
+  const handleSongAdded = (newSong) => {
+    setSongs(prev => [newSong, ...prev])
+  }
+
+  if (!currentSong) return null
+
   return (
     <div className="app">
       <div className="container">
@@ -123,6 +146,7 @@ function App() {
           queuePosition={queuePosition}
           onSongSelect={handleQueueSelect}
         />
+        <ImportSong onSongAdded={handleSongAdded} />
       </div>
     </div>
   )
