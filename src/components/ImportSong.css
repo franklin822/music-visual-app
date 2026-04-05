@@ -1,18 +1,91 @@
-.import-song {
-  background: rgba(255, 255, 255, 0.05);
+/* trigger button fixed in bottom right */
+.import-trigger {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  font-size: 1.8rem;
+  cursor: pointer;
   backdrop-filter: blur(10px);
+  transition: background 0.2s, transform 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.import-trigger:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+/* dark backdrop */
+.import-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.15s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* modal card */
+.import-modal {
+  background: rgba(30, 30, 40, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
-  padding: 24px;
-  width: 320px;
+  padding: 28px;
+  width: 380px;
   display: flex;
   flex-direction: column;
   gap: 16px;
+  animation: slideUp 0.2s ease;
 }
 
-.import-song h2 {
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.import-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.import-modal-header h2 {
   margin: 0;
   font-size: 1.2rem;
   color: white;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: color 0.2s, background 0.2s;
+}
+
+.close-button:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .form-group {
@@ -81,6 +154,7 @@ button[type="submit"] {
   font-size: 0.9rem;
   cursor: pointer;
   transition: background 0.2s;
+  width: 100%;
 }
 
 button[type="submit"]:hover {

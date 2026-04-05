@@ -2,6 +2,8 @@ import { useState } from 'react'
 import './ImportSong.css'
 
 function ImportSong({ onSongAdded }) {
+  // whether the import modal is open
+  const [isOpen, setIsOpen] = useState(false)
   // form field state
   const [title, setTitle] = useState('')
   const [artist, setArtist] = useState('')
@@ -69,69 +71,87 @@ function ImportSong({ onSongAdded }) {
   }
 
   return (
-    <div className="import-song">
-      <h2>Import Song</h2>
+    <>
+      {/* import button fixed in bottom right corner */}
+      <button className="import-trigger" onClick={() => setIsOpen(true)}>
+        +
+      </button>
 
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Title</label>
-          <input
-            type="text"
-            placeholder="Song title"
-            value={title}
-            onChange={e => setTitle(e.target.value)}
-          />
+      {/* modal overlay — only renders when open */}
+      {isOpen && (
+        <div className="import-overlay" onClick={(e) => {
+          // close if user clicks the backdrop, not the modal itself
+          if (e.target === e.currentTarget) setIsOpen(false)
+        }}>
+          <div className="import-modal">
+            <div className="import-modal-header">
+              <h2>Import Song</h2>
+              <button className="close-button" onClick={() => setIsOpen(false)}>✕</button>
+            </div>
+
+            <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label>Title</label>
+                <input
+                  type="text"
+                  placeholder="Song title"
+                  value={title}
+                  onChange={e => setTitle(e.target.value)}
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Artist</label>
+                <input
+                  type="text"
+                  placeholder="Artist name"
+                  value={artist}
+                  onChange={e => setArtist(e.target.value)}
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Album</label>
+                <input
+                  type="text"
+                  placeholder="Album name"
+                  value={album}
+                  onChange={e => setAlbum(e.target.value)}
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Audio File <span className="required">*</span></label>
+                <input
+                  id="audio-input"
+                  type="file"
+                  accept=".mp3,.wav,.flac,.m4a"
+                  onChange={e => setAudioFile(e.target.files[0])}
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Album Art <span className="optional">(optional)</span></label>
+                <input
+                  id="art-input"
+                  type="file"
+                  accept="image/*"
+                  onChange={e => setAlbumArtFile(e.target.files[0])}
+                />
+              </div>
+
+              {message && (
+                <p className={`message ${message.type}`}>{message.text}</p>
+              )}
+
+              <button type="submit" disabled={isLoading}>
+                {isLoading ? 'Uploading...' : 'Add Song'}
+              </button>
+            </form>
+          </div>
         </div>
-
-        <div className="form-group">
-          <label>Artist</label>
-          <input
-            type="text"
-            placeholder="Artist name"
-            value={artist}
-            onChange={e => setArtist(e.target.value)}
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Album</label>
-          <input
-            type="text"
-            placeholder="Album name"
-            value={album}
-            onChange={e => setAlbum(e.target.value)}
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Audio File <span className="required">*</span></label>
-          <input
-            id="audio-input"
-            type="file"
-            accept=".mp3,.wav,.flac,.m4a"
-            onChange={e => setAudioFile(e.target.files[0])}
-          />
-        </div>
-
-        <div className="form-group">
-          <label>Album Art <span className="optional">(optional)</span></label>
-          <input
-            id="art-input"
-            type="file"
-            accept="image/*"
-            onChange={e => setAlbumArtFile(e.target.files[0])}
-          />
-        </div>
-
-        {message && (
-          <p className={`message ${message.type}`}>{message.text}</p>
-        )}
-
-        <button type="submit" disabled={isLoading}>
-          {isLoading ? 'Uploading...' : 'Add Song'}
-        </button>
-      </form>
-    </div>
+      )}
+    </>
   )
 }
 

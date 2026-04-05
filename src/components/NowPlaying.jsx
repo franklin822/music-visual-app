@@ -12,6 +12,38 @@ function NowPlaying({ song, onPrevious, onNext, onSongEnd, shouldAutoPlay, onAut
   const [duration, setDuration] = useState(0)
   // holds reference to actual audio element in HTML
   const audioRef = useRef(null)
+  // holds reference to album art image element for color extraction
+  const imgRef = useRef(null)
+
+  // extracts dominant color from album art and updates background gradient
+  useEffect(() => {
+    if (!song.albumArt) return
+
+    const img = imgRef.current
+    if (!img) return
+
+    const extractColor = () => {
+      try {
+        const colorThief = new window.ColorThief()
+        const [r, g, b] = colorThief.getColor(img)
+        document.documentElement.style.setProperty(
+          '--dynamic-bg',
+          `linear-gradient(135deg, rgb(${r}, ${g}, ${b}) 0%, rgb(${Math.floor(r * 0.6)}, ${Math.floor(g * 0.6)}, ${Math.floor(b * 0.6)}) 100%)`
+        )
+      } catch (e) {
+        console.error('Color extraction failed:', e)
+      }
+    }
+
+    // if image is already loaded, extract immediately
+    // otherwise wait for it to load
+    if (img.complete) {
+      extractColor()
+    } else {
+      img.addEventListener('load', extractColor)
+      return () => img.removeEventListener('load', extractColor)
+    }
+  }, [song])
 
   // when song changes, reset progress and current time
   // loads new audio file
@@ -133,7 +165,9 @@ function NowPlaying({ song, onPrevious, onNext, onSongEnd, shouldAutoPlay, onAut
     <div className="now-playing">
       <div className="album-art">
         <img
-          src={song.album_art_url || 'https://dummyimage.com/400x400/1e293b/1e293b'}
+          ref={imgRef}
+          crossOrigin="anonymous"
+          src={song.albumArt ? `/uploads/art/${song.albumArt}` : 'https://dummyimage.com/400x400/1e293b/1e293b'}
           alt={`${song.album} cover`}
         />
       </div>
@@ -143,7 +177,7 @@ function NowPlaying({ song, onPrevious, onNext, onSongEnd, shouldAutoPlay, onAut
         <p className="album-name">{song.album}</p>
       </div>
 
-      <audio ref={audioRef} src={song.audio_url} />
+      <audio ref={audioRef} src={`/uploads/audio/${song.audioUrl}`} />
 
       <div className="player-controls">
         <button

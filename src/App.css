@@ -24,8 +24,11 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #39b495 0%, #328a91 100%);
+  /* falls back to teal if no album art color has been extracted yet */
+  background: var(--dynamic-bg, linear-gradient(135deg, #39b495 0%, #328a91 100%));
   padding: 2rem;
+  /* smooth transition when song changes */
+  transition: background 1s ease;
 }
 
 .container {

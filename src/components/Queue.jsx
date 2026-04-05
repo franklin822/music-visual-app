@@ -21,7 +21,7 @@ function Queue({ queue, songs, queuePosition, onSongSelect }) {
               <div className="queue-position">
                 {isCurrentSong ? '▶' : idx}
               </div>
-              <img src={song.albumArt} alt={song.album} />
+              <img src={song.albumArt ? `/uploads/art/${song.albumArt}` : 'https://dummyimage.com/400x400/1e293b/1e293b'} alt={song.album} />
               <div className="queue-song-details">
                 <p className="queue-song-title">{song.title}</p>
                 <p className="queue-song-artist">{song.artist}</p>

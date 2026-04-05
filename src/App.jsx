@@ -18,7 +18,10 @@ function App() {
         setSongs(data)
         setIsLoading(false)
       })
-      .catch(() => setIsLoading(false))
+      .catch((err) => {
+        console.error('Fetch error:', err)
+        setIsLoading(false)
+      })
   }, [])
 
   // array that holds the order of song indices to be played
@@ -155,19 +158,21 @@ function App() {
           currentSong={currentSong}
           onSongSelect={handleSongSelect}
         />
-        <NowPlaying
-          song={currentSong}
-          onPrevious={handlePrevious}
-          onNext={handleNext}
-          onSongEnd={handleSongEnd}
-          shouldAutoPlay={shouldAutoPlay}
-          onAutoPlayHandled={() => setShouldAutoPlay(false)}
-          onPause={() => setShouldAutoPlay(false)}
-          isShuffleOn={isShuffleOn}
-          onToggleShuffle={toggleShuffle}
-          hasPrevious={queuePosition > 0}
-          hasNext={queuePosition < queue.length - 1}
-        />
+        {currentSong && (
+          <NowPlaying
+            song={currentSong}
+            onPrevious={handlePrevious}
+            onNext={handleNext}
+            onSongEnd={handleSongEnd}
+            shouldAutoPlay={shouldAutoPlay}
+            onAutoPlayHandled={() => setShouldAutoPlay(false)}
+            onPause={() => setShouldAutoPlay(false)}
+            isShuffleOn={isShuffleOn}
+            onToggleShuffle={toggleShuffle}
+            hasPrevious={queuePosition > 0}
+            hasNext={queuePosition < queue.length - 1}
+          />
+        )}
         <Queue
           queue={queue}
           songs={songs}
